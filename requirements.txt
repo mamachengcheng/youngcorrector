@@ -1,0 +1,7 @@
+jieba
+pypinyin
+# https://github.com/kpu/kenlm/archive/master.zip
+numpy
+six
+pandas
+pycorrector
