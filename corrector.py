@@ -242,6 +242,22 @@ class Corrector(object):
 
 
 # """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    # def _check_in_errors(self, maybe_errors, maybe_err):
+    #     """
+    #     检查错误列表中的项是否已囊括待加入错误列表项
+    #     :param maybe_errors: 错误列表
+    #     :param maybe_err: 待加入错误列表项
+    #     :return: 
+    #     """
+    #     error_word_idx = 0
+    #     begin_idx = 1
+    #     end_idx = 2
+    #     for err in maybe_errors:
+    #         if maybe_err[error_word_idx] in err[error_word_idx] and maybe_err[begin_idx] >= err[begin_idx] and \
+    #                 maybe_err[end_idx] <= err[end_idx]:
+    #             return True
+    #     return False
+
     def _check_in_errors(self, maybe_errors, maybe_err):
         """
         检查错误列表中的项是否已囊括待加入错误列表项
@@ -256,6 +272,13 @@ class Corrector(object):
             if maybe_err[error_word_idx] in err[error_word_idx] and maybe_err[begin_idx] >= err[begin_idx] and \
                     maybe_err[end_idx] <= err[end_idx]:
                 return True
+            if err[3] == 'confusion':
+                if maybe_err[begin_idx] >= err[begin_idx] and maybe_err[end_idx] >= err[end_idx] and \
+                        maybe_err[begin_idx] < err[end_idx]:
+                    return  True
+                if maybe_err[begin_idx] <= err[begin_idx] and maybe_err[end_idx] <= err[end_idx] and \
+                        maybe_err[end_idx] > err[begin_idx]:
+                    return  True
         return False
 
     def _detect_short(self, sentence, start_idx):
