@@ -185,13 +185,33 @@ class Corrector(object):
     def _get_max_len(self, d):
         return max(map(len, [w for w in d]))
 
+    # def FMM(self, word_dict, token, window_size=5):
+    #     idxs = []
+    #     result = []
+    #     index = 0
+    #     text_size = len(token)
+    #     while text_size > index:
+    #         for size in range(window_size + index, index, -1):
+    #             piece = token[index:size]
+    #             if piece in word_dict:
+    #                 index = size - 1
+    #                 idxs.append(index-len(piece)+1)
+    #                 result.append(piece)
+    #                 break
+    #         index = index + 1
+    #     return idxs, result
+    
     def FMM(self, word_dict, token, window_size=5):
         idxs = []
         result = []
         index = 0
         text_size = len(token)
         while text_size > index:
-            for size in range(window_size + index, index, -1):
+            if (window_size + index) >= len(token):
+                a = len(token)
+            else:
+                a = (window_size + index)
+            for size in range(a, index, -1):
                 piece = token[index:size]
                 if piece in word_dict:
                     index = size - 1
